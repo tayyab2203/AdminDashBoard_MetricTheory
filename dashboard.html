@@ -1,0 +1,1864 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Dashboard | Metric Theory</title>
+
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Font Awesome -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Iconify Icons -->
+    <script src="https://code.iconify.design/iconify-icon/1.0.8/iconify-icon.min.js"></script>
+
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    />
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <!-- Your custom CSS -->
+    <link rel="stylesheet" href="./css/style.css" />
+  </head>
+
+  <body>
+    <!-- Topbar -->
+    <div
+      class="topbar d-flex justify-content-between align-items-center p-2 bg-light border-bottom"
+    >
+      <div class="d-flex align-items-center gap-2">
+        <button
+          class="btn d-md-none"
+          type="button"
+          data-bs-toggle="offcanvas"
+          data-bs-target="#offcanvasSidebar"
+          aria-controls="offcanvasSidebar"
+        >
+          <i class="fa fa-bars"></i>
+        </button>
+        <div class="topbar-logo">
+          <img src="./assets/logo.png" alt="Logo" height="36" />
+        </div>
+      </div>
+      <!-- Avatar with Logout Dropdown -->
+      <div class="avatar dropdown">
+        <a
+          href="#"
+          class="dropdown-toggle"
+          id="avatarDropdown"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+          <img style="width: 36px" src="./assets/profile.png" alt="Avatar" />
+        </a>
+        <ul
+          class="dropdown-menu dropdown-menu-end"
+          aria-labelledby="avatarDropdown"
+        >
+          <li><a class="dropdown-item text-danger" href="#">Logout</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="layout d-flex">
+      <!-- Offcanvas Sidebar for mobile -->
+      <div
+        class="offcanvas offcanvas-start d-md-none"
+        tabindex="-1"
+        id="offcanvasSidebar"
+        aria-labelledby="offcanvasSidebarLabel"
+      >
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title" id="offcanvasSidebarLabel">Menu</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="offcanvas"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="offcanvas-body p-0">
+          <ul class="nav flex-column px-2">
+            <li>
+              <a href="./index.html" class="nav-link"
+                ><i class="fa fa-user"></i> Users</a
+              >
+            </li>
+            <li>
+              <a
+                class="nav-link d-flex justify-content-between align-items-center"
+                data-bs-toggle="collapse"
+                href="#mobileProductsMenu"
+                role="button"
+                aria-expanded="false"
+                aria-controls="mobileProductsMenu"
+              >
+                <span><i class="fa fa-box"></i> Products</span>
+                <i class="fa fa-chevron-down small"></i>
+              </a>
+              <div class="collapse ps-3" id="mobileProductsMenu">
+                <ul class="nav flex-column">
+                  <li>
+                    <a href="./addProduct.html" class="nav-link"
+                      ><i class="fa fa-plus"></i> Add Product</a
+                    >
+                  </li>
+                  <li>
+                    <a href="./allProducts.html" class="nav-link"
+                      ><i class="fa fa-list"></i> All Products</a
+                    >
+                  </li>
+                </ul>
+              </div>
+            </li>
+            <li>
+              <a href="./allTasks.html" class="nav-link"
+                ><i class="fa fa-tasks"></i> Tasks</a
+              >
+            </li>
+            <li>
+              <a href="./contacts.html" class="nav-link"
+                ><i class="fa fa-trophy"></i> Contacts</a
+              >
+            </li>
+            <li>
+              <a href="./affiliate.html" class="nav-link"
+                ><i class="fa fa-link"></i> Affiliate</a
+              >
+            </li>
+            <li>
+              <a href="./vipLevels.html" class="nav-link"
+                ><i class="fa fa-star"></i> VIP Levels</a
+              >
+            </li>
+            <li>
+              <a href="./payment.html" class="nav-link"
+                ><i class="fa fa-credit-card"></i> Payment</a
+              >
+            </li>
+            <li>
+              <a href="./setting.html" class="nav-link"
+                ><i class="fa fa-cog"></i> Settings</a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Desktop Sidebar -->
+      <div
+        class="sidebar d-none d-md-block bg-white border-end"
+        style="width: 250px"
+      >
+        <div class="search-box">
+          <input type="text" placeholder="Search here..." />
+          <i class="fa fa-search text-dark"></i>
+        </div>
+        <ul class="nav flex-column px-2">
+          <li>
+            <a href="./index.html" class="nav-link"
+              ><i class="fa fa-user"></i> Users</a
+            >
+          </li>
+          <li>
+            <a
+              class="nav-link d-flex justify-content-between align-items-center"
+              data-bs-toggle="collapse"
+              href="#productsMenu"
+              role="button"
+              aria-expanded="false"
+              aria-controls="productsMenu"
+            >
+              <span><i class="fa fa-box"></i> Products</span>
+              <i class="fa fa-chevron-down small"></i>
+            </a>
+            <div class="collapse ps-3" id="productsMenu">
+              <ul class="nav flex-column">
+                <li>
+                  <a href="./addProduct.html" class="nav-link"
+                    ><i class="fa fa-plus"></i> Add Product</a
+                  >
+                </li>
+                <li>
+                  <a href="./allProducts.html" class="nav-link"
+                    ><i class="fa fa-list"></i> All Products</a
+                  >
+                </li>
+              </ul>
+            </div>
+          </li>
+          <li>
+            <a href="./allTasks.html" class="nav-link"
+              ><i class="fa fa-tasks"></i> Tasks</a
+            >
+          </li>
+          <li>
+            <a href="./contacts.html" class="nav-link"
+              ><i class="fa fa-trophy"></i> Contacts</a
+            >
+          </li>
+          <li>
+            <a href="./affiliate.html" class="nav-link"
+              ><i class="fa fa-link"></i> Affiliate</a
+            >
+          </li>
+          <li>
+            <a href="./vipLevels.html" class="nav-link"
+              ><i class="fa fa-star"></i> VIP Levels</a
+            >
+          </li>
+          <li>
+            <a href="./payment.html" class="nav-link"
+              ><i class="fa fa-credit-card"></i> Payment</a
+            >
+          </li>
+          <li>
+            <a href="./setting.html" class="nav-link"
+              ><i class="fa fa-cog"></i> Settings</a
+            >
+          </li>
+        </ul>
+      </div>
+
+      <div class="main-content">
+        <main class="dashboard-main">
+          <div class="dashboard-main-body">
+            <div
+              class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-24"
+            >
+              <h5 class="fw-bold text-muted" style="font-size: 21.1px">
+                Dashboard
+              </h5>
+              <ul class="d-flex align-items-center gap-2 list-unstyled m-0">
+                <li class="fw-medium">
+                  <a
+                    href="./index.html"
+                    class="d-flex align-items-center gap-1 text-decoration-none hover-text-primary"
+                  >
+                    <iconify-icon
+                      icon="solar:home-smile-angle-outline"
+                      class="icon text-lg"
+                    ></iconify-icon>
+                    Dashboard
+                  </a>
+                </li>
+                <li class="fw-medium text-muted">-</li>
+                <li class="fw-medium">AI</li>
+              </ul>
+            </div>
+            <!-- Top Cards -->
+            <div
+              class="container d-flex gap-3 mt-4 flex-wrap align-items-stretch"
+            >
+              <div class="card stat-card bg-blue">
+                <div class="d-flex align-items-center">
+                  <div class="icon icon-blue">
+                    <iconify-icon
+                      icon="flowbite:users-group-solid"
+                      class="text-white text-2xl mb-0"
+                      style="color: white"
+                      width="24"
+                      height="24"
+                    ></iconify-icon>
+                  </div>
+                  <div>
+                    <div class="stat-title">New Users</div>
+                    <div class="stat-value">5,000</div>
+                    <div class="stat-change text-success">
+                      Increase by
+                      <span
+                        class="bg-success-focus px-1 rounded-2 fw-medium text-success-main text-sm"
+                        >+200</span
+                      >
+                      this week
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="card stat-card bg-purple">
+                <div class="d-flex align-items-center">
+                  <div class="icon icon-purple">
+                    <iconify-icon
+                      icon="solar:wallet-bold"
+                      class="text-white text-2xl mb-0"
+                      style="color: white"
+                      width="24"
+                      height="24"
+                    ></iconify-icon>
+                  </div>
+                  <div>
+                    <div class="stat-title">Total Deposit</div>
+                    <div class="stat-value">15,000</div>
+                    <div class="stat-change text-danger">
+                      Increase by
+                      <span
+                        class="bg-danger-focus px-1 rounded-2 fw-medium text-danger-main text-sm"
+                        >-200</span
+                      >
+                      this week
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="card stat-card bg-red">
+                <div class="d-flex align-items-center">
+                  <div class="icon icon-red">
+                    <iconify-icon
+                      icon="fa6-solid:file-invoice-dollar"
+                      class="text-white text-2xl mb-0"
+                      style="color: white"
+                      width="24"
+                      height="24"
+                    ></iconify-icon>
+                  </div>
+                  <div>
+                    <div class="stat-title">Total Expense</div>
+                    <div class="stat-value">15,000</div>
+                    <div class="stat-change text-success">
+                      Increase by
+                      <span
+                        class="bg-success-focus px-1 rounded-2 fw-medium text-success-main text-sm"
+                        >+200</span
+                      >
+                      this week
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="card stat-card bg-green">
+                <div class="d-flex align-items-center">
+                  <div class="icon icon-green">
+                    <iconify-icon
+                      icon="streamline:bag-dollar-solid"
+                      class="text-white text-2xl mb-0"
+                      style="color: white"
+                      width="24"
+                      height="24"
+                    ></iconify-icon>
+                  </div>
+                  <div>
+                    <div class="stat-title">Total Earning</div>
+                    <div class="stat-value">15,000</div>
+                    <div class="stat-change text-success">
+                      Increase by
+                      <span
+                        class="bg-success-focus px-1 rounded-2 fw-medium text-success-main text-sm"
+                        >+200</span
+                      >
+                      this week
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row gy-4 mt-1">
+              <!-- Revenue Statistics Start -->
+              <div class="col-xxl-8">
+                <div class="card h-100 radius-8 border-0">
+                  <div class="card-body p-24">
+                    <div
+                      class="d-flex align-items-center flex-wrap gap-2 justify-content-between"
+                    >
+                      <div>
+                        <h6 class="mb-2 fw-bold text-lg">Revenue Statistics</h6>
+                        <span class="text-sm fw-medium text-secondary-light"
+                          >Yearly earning overview</span
+                        >
+                      </div>
+                      <div class="">
+                        <select
+                          class="form-select form-select-sm w-auto bg-base border text-secondary-light radius-8"
+                        >
+                          <option>Yearly</option>
+                          <option>Monthly</option>
+                          <option>Weekly</option>
+                          <option>Today</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div class="mt-24 mb-24 d-flex flex-wrap">
+                      <div class="me-40">
+                        <span class="text-secondary-light text-sm mb-1"
+                          >Income</span
+                        >
+                        <div class="">
+                          <h6 class="fw-semibold d-inline-block mb-0">
+                            $26,201
+                          </h6>
+                          <span
+                            class="text-success-main fw-bold d-inline-flex align-items-center gap-1"
+                            >10%
+                            <iconify-icon
+                              icon="iconamoon:arrow-up-2-fill"
+                              class="icon"
+                            ></iconify-icon>
+                          </span>
+                        </div>
+                      </div>
+                      <div>
+                        <span class="text-secondary-light text-sm mb-1"
+                          >Expenses</span
+                        >
+                        <div class="">
+                          <h6 class="fw-semibold d-inline-block mb-0">
+                            $18,120
+                          </h6>
+                          <span
+                            class="text-danger-main fw-bold d-inline-flex align-items-center gap-1"
+                            >10%
+                            <iconify-icon
+                              icon="iconamoon:arrow-down-2-fill"
+                              class="icon"
+                            ></iconify-icon>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div id="upDownBarchart"></div>
+                  </div>
+                </div>
+              </div>
+              <!-- Revenue Statistics End -->
+
+              <!-- Statistics Start -->
+              <div class="col-xxl-4">
+                <div class="card h-100 radius-8 border-0">
+                  <div class="card-body p-4">
+                    <h6 class="mb-3 fw-bold text-lg">Statistic</h6>
+
+                    <div class="d-flex flex-column gap-4">
+                      <!-- Daily Conversions -->
+                      <div
+                        class="d-flex align-items-center justify-content-between"
+                      >
+                        <div>
+                          <div
+                            class="text-secondary-light fw-normal mb-1 text-xl"
+                          >
+                            Daily Conversions
+                          </div>
+                          <h5 class="fw-semibold mb-0">%60</h5>
+                        </div>
+                        <div class="position-relative">
+                          <div id="semiCircleGauge"></div>
+                          <span
+                            class="w-36-px h-36-px rounded-circle bg-neutral-100 d-flex justify-content-center align-items-center position-absolute start-50 translate-middle mt-1"
+                          >
+                            <iconify-icon
+                              icon="mdi:emoji"
+                              class="text-primary-600 text-md"
+                            ></iconify-icon>
+                          </span>
+                        </div>
+                      </div>
+
+                      <!-- Visits By Day -->
+                      <div
+                        class="d-flex align-items-center justify-content-between"
+                      >
+                        <div>
+                          <div
+                            class="text-secondary-light fw-normal mb-1 text-xl"
+                          >
+                            Visits By Day
+                          </div>
+                          <h5 class="fw-semibold mb-0">20k</h5>
+                        </div>
+                        <div id="areaChart"></div>
+                      </div>
+
+                      <!-- Today Income -->
+                      <div
+                        class="d-flex align-items-center justify-content-between"
+                      >
+                        <div>
+                          <div
+                            class="text-secondary-light fw-normal mb-1 text-xl"
+                          >
+                            Today Income
+                          </div>
+                          <h5 class="fw-semibold mb-0">$5.5k</h5>
+                        </div>
+                        <div id="dailyIconBarChart"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- Statistics End -->
+
+              <!-- Most Location Start -->
+              <div class="col-xxl-3">
+                <div class="card radius-8 border-0 h-100">
+                  <!-- Card Header -->
+                  <div class="card-body pb-2">
+                    <h6 class="fw-bold text-lg mb-0">Most Location</h6>
+                  </div>
+
+                  <!-- Map -->
+                  <div id="leafletMap" style="height: 400px; width: 100%"></div>
+
+                  <!-- Locations List -->
+                  <div
+                    class="card-body pt-3 pb-0 px-4 max-h-266-px overflow-y-auto scroll-sm"
+                  >
+                    <div class="d-flex flex-column gap-3">
+                      <!-- Location Item -->
+                      <div
+                        class="d-flex align-items-center justify-content-between"
+                      >
+                        <div class="d-flex align-items-center w-100">
+                          <img
+                            src="./assets/united-states-of-america.png"
+                            alt="USA"
+                            class="w-40-px h-40-px rounded-circle me-3 flex-shrink-0"
+                          />
+                          <div class="flex-grow-1">
+                            <h6 class="text-sm mb-1">USA</h6>
+                            <span class="text-xs text-secondary-light fw-medium"
+                              >1,240 Users</span
+                            >
+                          </div>
+                        </div>
+                        <div class="text-end ms-auto" style="min-width: 120px">
+                          <div
+                            class="progress progress-sm rounded-pill mb-1"
+                            role="progressbar"
+                            aria-label="USA"
+                            aria-valuenow="80"
+                            aria-valuemin="0"
+                            aria-valuemax="100"
+                          >
+                            <div
+                              class="progress-bar bg-primary-600"
+                              style="width: 80%"
+                            ></div>
+                          </div>
+                          <span class="text-secondary-light font-xs fw-semibold"
+                            >80%</span
+                          >
+                        </div>
+                      </div>
+
+                      <!-- Japan -->
+                      <div
+                        class="d-flex align-items-center justify-content-between"
+                      >
+                        <div class="d-flex align-items-center w-100">
+                          <img
+                            src="./assets/japan.png"
+                            alt="Japan"
+                            class="w-40-px h-40-px rounded-circle me-3 flex-shrink-0"
+                          />
+                          <div class="flex-grow-1">
+                            <h6 class="text-sm mb-1">Japan</h6>
+                            <span class="text-xs text-secondary-light fw-medium"
+                              >1,240 Users</span
+                            >
+                          </div>
+                        </div>
+                        <div class="text-end ms-auto" style="min-width: 120px">
+                          <div class="progress progress-sm rounded-pill mb-1">
+                            <div
+                              class="progress-bar bg-orange"
+                              style="width: 60%"
+                            ></div>
+                          </div>
+                          <span class="text-secondary-light font-xs fw-semibold"
+                            >60%</span
+                          >
+                        </div>
+                      </div>
+
+                      <!-- France -->
+                      <div
+                        class="d-flex align-items-center justify-content-between"
+                      >
+                        <div class="d-flex align-items-center w-100">
+                          <img
+                            src="./assets/france.png"
+                            alt="France"
+                            class="w-40-px h-40-px rounded-circle me-3 flex-shrink-0"
+                          />
+                          <div class="flex-grow-1">
+                            <h6 class="text-sm mb-1">France</h6>
+                            <span class="text-xs text-secondary-light fw-medium"
+                              >1,240 Users</span
+                            >
+                          </div>
+                        </div>
+                        <div class="text-end ms-auto" style="min-width: 120px">
+                          <div class="progress progress-sm rounded-pill mb-1">
+                            <div
+                              class="progress-bar bg-yellow"
+                              style="width: 49%"
+                            ></div>
+                          </div>
+                          <span class="text-secondary-light font-xs fw-semibold"
+                            >49%</span
+                          >
+                        </div>
+                      </div>
+
+                      <!-- Germany -->
+                      <div
+                        class="d-flex align-items-center justify-content-between"
+                      >
+                        <div class="d-flex align-items-center w-100">
+                          <img
+                            src="./assets/germany.png"
+                            alt="Germany"
+                            class="w-40-px h-40-px rounded-circle me-3 flex-shrink-0"
+                          />
+                          <div class="flex-grow-1">
+                            <h6 class="text-sm mb-1">Germany</h6>
+                            <span class="text-xs text-secondary-light fw-medium"
+                              >1,240 Users</span
+                            >
+                          </div>
+                        </div>
+                        <div class="text-end ms-auto" style="min-width: 120px">
+                          <div class="progress progress-sm rounded-pill mb-1">
+                            <div
+                              class="progress-bar bg-success-main"
+                              style="width: 100%"
+                            ></div>
+                          </div>
+                          <span class="text-secondary-light font-xs fw-semibold"
+                            >100%</span
+                          >
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- Most Location End -->
+
+              <!-- My Portfolio Start -->
+              <div class="col-xxl-3">
+                <div class="card h-100 radius-8 border-0">
+                  <div class="card-body p-4">
+                    <h6 class="mb-3 fw-bold text-lg">My Portfolio</h6>
+
+                    <div class="position-relative">
+                      <!-- Left Badge -->
+                      <span
+                        class="w-80-px h-80-px bg-base shadow text-primary-light fw-bold text-xxl d-flex justify-content-center align-items-center rounded-circle position-absolute start-0 bottom-0 z-1"
+                      >
+                        50k
+                      </span>
+
+                      <!-- Donut Chart -->
+                      <div id="statisticsDonutChart" class="mt-5 mb-5"></div>
+
+                      <!-- Right Badge -->
+                      <span
+                        class="w-80-px h-80-px bg-base shadow text-primary-light fw-bold text-xxl d-flex justify-content-center align-items-center rounded-circle position-absolute end-0 top-0 z-1"
+                      >
+                        20k
+                      </span>
+                    </div>
+
+                    <!-- Legend -->
+                    <ul class="d-flex flex-wrap flex-column mt-4 gap-3">
+                      <li class="d-flex align-items-center gap-2">
+                        <span
+                          class="w-16-px h-16-px radius-2 bg-primary-600 d-inline-block"
+                        ></span>
+                        <span class="text-secondary-light text-lg fw-normal"
+                          >Total Gain:
+                          <span class="text-primary-light fw-bold text-lg"
+                            >$50,000</span
+                          >
+                        </span>
+                      </li>
+                      <li class="d-flex align-items-center gap-2">
+                        <span
+                          class="w-16-px h-16-px radius-2 bg-yellow d-inline-block"
+                        ></span>
+                        <span class="text-secondary-light text-lg fw-normal"
+                          >Total Investment:
+                          <span class="text-primary-light fw-bold text-lg"
+                            >$20,000</span
+                          >
+                        </span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Latest Investments Start -->
+              <div class="col-xxl-6">
+                <div class="card h-100">
+                  <div class="card-body p-24">
+                    <div
+                      class="d-flex align-items-center flex-wrap gap-2 justify-content-between mb-20"
+                    >
+                      <h6 class="mb-2 fw-bold text-lg mb-0">
+                        Latest Investments
+                      </h6>
+                      <a
+                        href="javascript:void(0)"
+                        class="text-primary-600 hover-text-primary d-flex align-items-center gap-1"
+                      >
+                        View All
+                        <iconify-icon
+                          icon="solar:alt-arrow-right-linear"
+                          class="icon"
+                        ></iconify-icon>
+                      </a>
+                    </div>
+                    <div class="table-responsive scroll-sm">
+                      <table class="table bordered-table sm-table mb-0">
+                        <thead>
+                          <tr>
+                            <th scope="col">Asset</th>
+                            <th scope="col">Quantity</th>
+                            <th scope="col">Price</th>
+                            <th scope="col">Date</th>
+                            <th scope="col" class="text-center">
+                              Total Orders
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>
+                              <div class="d-flex align-items-center">
+                                <img
+                                  src="./assets/asset-img1.png"
+                                  alt=""
+                                  class="flex-shrink-0 me-12 w-40-px h-40-px radius-8 me-12"
+                                />
+                                <div class="flex-grow-1">
+                                  <h6 class="text-md mb-0 fw-normal">Gold</h6>
+                                  <span
+                                    class="text-sm text-secondary-light fw-normal"
+                                    >Main Asset</span
+                                  >
+                                </div>
+                              </div>
+                            </td>
+                            <td>
+                              <h6 class="text-md mb-0 fw-normal">7500</h6>
+                              <span
+                                class="text-sm text-secondary-light fw-normal"
+                                >Ounces</span
+                              >
+                            </td>
+                            <td>$7,500.00</td>
+                            <td>25 May 2024</td>
+                            <td class="text-center">
+                              <span
+                                class="bg-success-focus text-success-main badge pill fw-medium text-sm px-2 py-2"
+                                >Completed</span
+                              >
+                            </td>
+                          </tr>
+
+                          <tr>
+                            <td>
+                              <div class="d-flex align-items-center">
+                                <img
+                                  src="./assets/asset-img2.png"
+                                  alt=""
+                                  class="flex-shrink-0 me-12 w-40-px h-40-px radius-8 me-12"
+                                />
+                                <div class="flex-grow-1">
+                                  <h6 class="text-md mb-0 fw-normal">
+                                    Dollars
+                                  </h6>
+                                  <span
+                                    class="text-sm text-secondary-light fw-normal"
+                                    >Currency</span
+                                  >
+                                </div>
+                              </div>
+                            </td>
+                            <td>
+                              <h6 class="text-md mb-0 fw-normal">5,40,000</h6>
+                              <span
+                                class="text-sm text-secondary-light fw-normal"
+                                >Dollars</span
+                              >
+                            </td>
+                            <td>$5,40,000.00</td>
+                            <td>25 May 2024</td>
+                            <td class="text-center">
+                              <span
+                                class="bg-warning-focus text-warning-main badge pill px-2 py-2 fw-medium text-sm"
+                                >In Progress</span
+                              >
+                            </td>
+                          </tr>
+
+                          <tr>
+                            <td>
+                              <div class="d-flex align-items-center">
+                                <img
+                                  src="./assets/asset-img3.png"
+                                  alt=""
+                                  class="flex-shrink-0 me-12 w-40-px h-40-px radius-8 me-12"
+                                />
+                                <div class="flex-grow-1">
+                                  <h6 class="text-md mb-0 fw-normal">
+                                    Stock Market
+                                  </h6>
+                                  <span
+                                    class="text-sm text-secondary-light fw-normal"
+                                    >Product</span
+                                  >
+                                </div>
+                              </div>
+                            </td>
+                            <td>
+                              <h6 class="text-md mb-0 fw-normal">1500</h6>
+                              <span
+                                class="text-sm text-secondary-light fw-normal"
+                                >Products</span
+                              >
+                            </td>
+                            <td>$50,000.00</td>
+                            <td>25 May 2024</td>
+                            <td class="text-center">
+                              <span
+                                class="bg-success-focus text-success-main badge pill fw-medium text-sm px-2 py-2"
+                                >Completed</span
+                              >
+                            </td>
+                          </tr>
+
+                          <tr>
+                            <td>
+                              <div class="d-flex align-items-center">
+                                <img
+                                  src="./assets/asset-img4.png"
+                                  alt=""
+                                  class="flex-shrink-0 me-12 w-40-px h-40-px radius-8 me-12"
+                                />
+                                <div class="flex-grow-1">
+                                  <h6 class="text-md mb-0 fw-normal">Dimond</h6>
+                                  <span
+                                    class="text-sm text-secondary-light fw-normal"
+                                    >Asset</span
+                                  >
+                                </div>
+                              </div>
+                            </td>
+                            <td>
+                              <h6 class="text-md mb-0 fw-normal">350</h6>
+                              <span
+                                class="text-sm text-secondary-light fw-normal"
+                                >Ounces</span
+                              >
+                            </td>
+                            <td>$30,000.00</td>
+                            <td>25 May 2024</td>
+                            <td class="text-center">
+                              <span
+                                class="bg-warning-focus text-warning-main badge pill px-2 py-2 fw-medium text-sm"
+                                >In Progress</span
+                              >
+                            </td>
+                          </tr>
+
+                          <tr>
+                            <td>
+                              <div class="d-flex align-items-center">
+                                <img
+                                  src="./assets/asset-img5.png"
+                                  alt=""
+                                  class="flex-shrink-0 me-12 w-40-px h-40-px radius-8 me-12"
+                                />
+                                <div class="flex-grow-1">
+                                  <h6 class="text-md mb-0 fw-normal">
+                                    S&P 500
+                                  </h6>
+                                  <span
+                                    class="text-sm text-secondary-light fw-normal"
+                                    >Index</span
+                                  >
+                                </div>
+                              </div>
+                            </td>
+                            <td>
+                              <h6 class="text-md mb-0 fw-normal">24,000</h6>
+                              <span
+                                class="text-sm text-secondary-light fw-normal"
+                                >Shares</span
+                              >
+                            </td>
+                            <td>$63,000.00</td>
+                            <td>25 May 2024</td>
+                            <td class="text-center">
+                              <span
+                                class="bg-success-focus text-success-main badge pill fw-medium text-sm px-2 py-2"
+                                >Completed</span
+                              >
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Notice Board Start -->
+              <div class="col-xxl-4">
+                <div class="card h-100 radius-8 border-0">
+                  <div class="card-body p-24">
+                    <!-- Header -->
+                    <div
+                      class="d-flex align-items-center justify-content-between mb-4"
+                    >
+                      <h6 class="fw-bold text-lg mb-0">Notice Board</h6>
+                      <a
+                        href="javascript:void(0)"
+                        class="text-primary-600 hover-text-primary d-flex align-items-center gap-1 text-sm fw-medium"
+                      >
+                        View All
+                        <iconify-icon
+                          icon="solar:alt-arrow-right-linear"
+                          class="icon"
+                        ></iconify-icon>
+                      </a>
+                    </div>
+
+                    <!-- Notice Item 1 -->
+                    <div class="d-flex align-items-start gap-3 mb-4">
+                      <img
+                        src="./assets/profile.png"
+                        alt="Admin"
+                        class="flex-shrink-0 w-40-px h-40-px rounded-2"
+                      />
+                      <div class="flex-grow-1">
+                        <h6 class="text-md fw-semibold mb-1">Admin</h6>
+                        <p class="text-sm text-secondary-light fw-medium mb-1">
+                          Lorem Ipsum is simply dummy text of the printing and
+                          typesetting industry. Lorem Ipsum is simply dummy.
+                        </p>
+                        <span class="text-sm text-secondary-light fw-normal"
+                          >25 Jan 2024</span
+                        >
+                      </div>
+                    </div>
+
+                    <!-- Notice Item 2 -->
+                    <div class="d-flex align-items-start gap-3 mb-4">
+                      <img
+                        src="./assets/profile.png"
+                        alt="Kathryn Murphy"
+                        class="flex-shrink-0 w-40-px h-40-px rounded-2"
+                      />
+                      <div class="flex-grow-1">
+                        <h6 class="text-md fw-semibold mb-1">Kathryn Murphy</h6>
+                        <p class="text-sm text-secondary-light fw-medium mb-1">
+                          Lorem Ipsum is simply dummy text of the printing and
+                          typesetting industry. Lorem Ipsum is simply dummy text
+                          of the printing and typesetting industry.
+                        </p>
+                        <span class="text-sm text-secondary-light fw-normal"
+                          >25 Jan 2024</span
+                        >
+                      </div>
+                    </div>
+
+                    <!-- Notice Item 3 -->
+                    <div class="d-flex align-items-start gap-3">
+                      <img
+                        src="./assets/profile.png"
+                        alt="Cameron Williamson"
+                        class="flex-shrink-0 w-40-px h-40-px rounded-2"
+                      />
+                      <div class="flex-grow-1">
+                        <h6 class="text-md fw-semibold mb-1">
+                          Cameron Williamson
+                        </h6>
+                        <p class="text-sm text-secondary-light fw-medium mb-1">
+                          Lorem Ipsum is simply dummy text of the printing.
+                          Lorem Ipsum is simply dummy text of the printing and
+                          typesetting industry.
+                        </p>
+                        <span class="text-sm text-secondary-light fw-normal"
+                          >25 Jan 2024</span
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Total Transactions Card Start -->
+              <div class="col-xxl-4">
+                <div class="card h-100 radius-8 border-0">
+                  <div class="card-body p-24">
+                    <!-- Header -->
+                    <div
+                      class="d-flex align-items-center justify-content-between mb-4 flex-wrap gap-2"
+                    >
+                      <h6 class="fw-bold text-lg mb-0">Total Transactions</h6>
+                      <select
+                        class="form-select form-select-sm w-auto bg-base border text-secondary-light radius-8"
+                      >
+                        <option>Yearly</option>
+                        <option>Monthly</option>
+                        <option>Weekly</option>
+                        <option>Today</option>
+                      </select>
+                    </div>
+
+                    <!-- Transaction Stats -->
+                    <ul
+                      class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-4 ps-0"
+                    >
+                      <li class="d-flex align-items-center gap-2">
+                        <span
+                          class="w-16-px h-16-px rounded-1 bg-primary-600 d-inline-block"
+                        ></span>
+                        <span class="text-secondary-light text-md">
+                          Total Gain:
+                          <span class="text-primary-light fw-bold"
+                            >$50,000</span
+                          >
+                        </span>
+                      </li>
+                    </ul>
+
+                    <!-- Chart -->
+                    <div
+                      id="transactionLineChart"
+                      style="min-height: 250px"
+                    ></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-xxl-4">
+                <div class="card h-100">
+                  <div class="card-body p-24">
+                    <div
+                      class="d-flex align-items-center flex-wrap gap-2 justify-content-between mb-20"
+                    >
+                      <h6 class="mb-2 fw-bold text-lg">Project Status</h6>
+                      <div class="">
+                        <select
+                          class="form-select form-select-sm w-auto bg-base border text-secondary-light radius-8"
+                        >
+                          <option>Yearly</option>
+                          <option>Monthly</option>
+                          <option>Weekly</option>
+                          <option>Today</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div class="table-responsive scroll-sm">
+                      <table class="table sm-table bordered-table mb-0">
+                        <thead>
+                          <tr>
+                            <th scope="col">Name</th>
+                            <th scope="col">Duration</th>
+                            <th scope="col">
+                              <div class="max-w-112 mx-auto">
+                                <span>Stock</span>
+                              </div>
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>Gold</td>
+                            <td>2 Months</td>
+                            <td>
+                              <div class="max-w-112 mx-auto">
+                                <div class="w-100">
+                                  <div
+                                    class="progress progress-sm rounded-pill"
+                                    role="progressbar"
+                                    aria-label="Success example"
+                                    aria-valuenow="25"
+                                    aria-valuemin="0"
+                                    aria-valuemax="100"
+                                  >
+                                    <div
+                                      class="progress-bar bg-red rounded-pill"
+                                      style="width: 30%"
+                                    ></div>
+                                  </div>
+                                </div>
+                                <span
+                                  class="mt-8 text-secondary-light text-sm fw-medium"
+                                  >30%</span
+                                >
+                              </div>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>Dollars</td>
+                            <td>3 Months</td>
+                            <td>
+                              <div class="max-w-112 mx-auto">
+                                <div class="w-100">
+                                  <div
+                                    class="progress progress-sm rounded-pill"
+                                    role="progressbar"
+                                    aria-label="Success example"
+                                    aria-valuenow="25"
+                                    aria-valuemin="0"
+                                    aria-valuemax="100"
+                                  >
+                                    <div
+                                      class="progress-bar bg-warning-main rounded-pill"
+                                      style="width: 50%"
+                                    ></div>
+                                  </div>
+                                </div>
+                                <span
+                                  class="mt-8 text-secondary-light text-sm fw-medium"
+                                  >50%</span
+                                >
+                              </div>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>Stock Market</td>
+                            <td>1 Months</td>
+                            <td>
+                              <div class="max-w-112 mx-auto">
+                                <div class="w-100">
+                                  <div
+                                    class="progress progress-sm rounded-pill"
+                                    role="progressbar"
+                                    aria-label="Success example"
+                                    aria-valuenow="25"
+                                    aria-valuemin="0"
+                                    aria-valuemax="100"
+                                  >
+                                    <div
+                                      class="progress-bar bg-info-main rounded-pill"
+                                      style="width: 60%"
+                                    ></div>
+                                  </div>
+                                </div>
+                                <span
+                                  class="mt-8 text-secondary-light text-sm fw-medium"
+                                  >60%</span
+                                >
+                              </div>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>Dimond</td>
+                            <td>5 Months</td>
+                            <td>
+                              <div class="max-w-112 mx-auto">
+                                <div class="w-100">
+                                  <div
+                                    class="progress progress-sm rounded-pill"
+                                    role="progressbar"
+                                    aria-label="Success example"
+                                    aria-valuenow="25"
+                                    aria-valuemin="0"
+                                    aria-valuemax="100"
+                                  >
+                                    <div
+                                      class="progress-bar bg-success-main rounded-pill"
+                                      style="width: 80%"
+                                    ></div>
+                                  </div>
+                                </div>
+                                <span
+                                  class="mt-8 text-secondary-light text-sm fw-medium"
+                                  >80%</span
+                                >
+                              </div>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>S&P 500</td>
+                            <td>4 Months</td>
+                            <td>
+                              <div class="max-w-112 mx-auto">
+                                <div class="w-100">
+                                  <div
+                                    class="progress progress-sm rounded-pill"
+                                    role="progressbar"
+                                    aria-label="Success example"
+                                    aria-valuenow="25"
+                                    aria-valuemin="0"
+                                    aria-valuemax="100"
+                                  >
+                                    <div
+                                      class="progress-bar bg-red rounded-pill"
+                                      style="width: 70%"
+                                    ></div>
+                                  </div>
+                                </div>
+                                <span
+                                  class="mt-8 text-secondary-light text-sm fw-medium"
+                                  >70%</span
+                                >
+                              </div>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- Project Status End -->
+            </div>
+          </div>
+
+          <footer class="d-footer">
+            <div class="row align-items-center justify-content-between">
+              <div class="col-auto">
+                <p class="mb-0">© 2025 Metric Theory. All Rights Reserved.</p>
+              </div>
+              <!-- <div class="col-auto">
+                <p class="mb-0">
+                  Made by <span class="text-primary-600">wowtheme7</span>
+                </p>
+              </div> -->
+            </div>
+          </footer>
+        </main>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        var options = {
+          series: [70, 30],
+          colors: ["#FF9F29", "#487FFF"],
+          labels: ["Female", "Male"],
+          legend: {
+            show: false,
+          },
+          chart: {
+            type: "donut",
+            height: 230,
+            sparkline: {
+              enabled: true, // Remove whitespace
+            },
+            margin: {
+              top: 0,
+              right: 0,
+              bottom: 0,
+              left: 0,
+            },
+            padding: {
+              top: 0,
+              right: 0,
+              bottom: 0,
+              left: 0,
+            },
+          },
+          stroke: {
+            width: 0,
+          },
+          dataLabels: {
+            enabled: false,
+          },
+          responsive: [
+            {
+              breakpoint: 480,
+              options: {
+                chart: {
+                  width: 200,
+                },
+                legend: {
+                  position: "bottom",
+                },
+              },
+            },
+          ],
+        };
+
+        var chart = new ApexCharts(
+          document.querySelector("#statisticsDonutChart"),
+          options
+        );
+        chart.render();
+
+        // #upDownBarchart
+        var options = {
+          series: [
+            {
+              name: "Income",
+              data: [44, 42, 57, 86, 58, 55, 70, 44, 42, 57, 86, 58, 55, 70],
+            },
+            {
+              name: "Expenses",
+              data: [
+                -34, -22, -37, -56, -21, -35, -60, -34, -22, -37, -56, -21, -35,
+                -60,
+              ],
+            },
+          ],
+          chart: {
+            stacked: true,
+            type: "bar",
+            height: 263,
+            fontFamily: "Poppins, sans-serif",
+            toolbar: {
+              show: false,
+            },
+          },
+          colors: ["#487FFF", "#EF4A00"],
+          plotOptions: {
+            bar: {
+              columnWidth: "8",
+              borderRadius: [2],
+              borderRadiusWhenStacked: "all",
+            },
+          },
+          stroke: {
+            width: [5, 5],
+          },
+          dataLabels: {
+            enabled: false,
+          },
+          legend: {
+            show: true,
+            position: "top",
+          },
+          yaxis: {
+            show: false,
+            title: {
+              text: undefined,
+            },
+            labels: {
+              formatter: function (y) {
+                return y.toFixed(0) + "";
+              },
+            },
+          },
+          xaxis: {
+            show: false,
+            categories: [
+              "Mon",
+              "Tue",
+              "Wed",
+              "Thu",
+              "Fri",
+              "Sat",
+              "Sun",
+              "Mon",
+              "Tue",
+              "Wed",
+              "Thu",
+              "Fri",
+              "Sat",
+              "Sun",
+            ],
+            axisBorder: {
+              show: false,
+            },
+            axisTicks: {
+              show: false,
+            },
+            labels: {
+              show: true,
+              style: {
+                colors: "#d4d7d9",
+                fontSize: "10px",
+                fontWeight: 500,
+              },
+            },
+          },
+          tooltip: {
+            enabled: true,
+            shared: true,
+            intersect: false,
+            theme: "dark",
+            x: {
+              show: false,
+            },
+          },
+        };
+        var chart = new ApexCharts(
+          document.querySelector("#upDownBarchart"),
+          options
+        );
+        chart.render();
+
+        // #semiCircleGauge
+        var options = {
+          series: [75],
+          chart: {
+            width: 200,
+            type: "radialBar",
+            sparkline: {
+              enabled: true, // Remove whitespace
+            },
+            toolbar: {
+              show: false,
+            },
+          },
+          plotOptions: {
+            radialBar: {
+              offsetY: -24,
+              offsetX: -14,
+              startAngle: -90,
+              endAngle: 90,
+              track: {
+                background: "#E3E6E9",
+                // strokeWidth: 32,
+                dropShadow: {
+                  enabled: false,
+                  top: 2,
+                  left: 0,
+                  color: "#999",
+                  opacity: 1,
+                  blur: 2,
+                },
+              },
+              dataLabels: {
+                show: false,
+                name: {
+                  show: false,
+                },
+                value: {
+                  offsetY: -2,
+                  fontSize: "22px",
+                },
+              },
+            },
+          },
+          fill: {
+            type: "gradient",
+            colors: ["#9DBAFF"],
+            gradient: {
+              shade: "dark",
+              type: "horizontal",
+              shadeIntensity: 0.5,
+              gradientToColors: ["#487FFF"],
+              inverseColors: true,
+              opacityFrom: 1,
+              opacityTo: 1,
+              stops: [0, 100],
+            },
+          },
+          stroke: {
+            lineCap: "round",
+          },
+          labels: ["Percent"],
+        };
+
+        var chart = new ApexCharts(
+          document.querySelector("#semiCircleGauge"),
+          options
+        );
+        chart.render();
+
+        // #areaChart
+        function createChart(chartId, chartColor) {
+          let currentYear = new Date().getFullYear();
+
+          var options = {
+            series: [
+              {
+                name: "series1",
+                data: [0, 10, 8, 25, 15, 26, 13, 35, 15, 39, 16, 46, 42],
+              },
+            ],
+            chart: {
+              type: "area",
+              width: 164,
+              height: 72,
+
+              sparkline: {
+                enabled: true, // Remove whitespace
+              },
+
+              toolbar: {
+                show: false,
+              },
+              padding: {
+                left: 0,
+                right: 0,
+                top: 0,
+                bottom: 0,
+              },
+            },
+            dataLabels: {
+              enabled: false,
+            },
+            stroke: {
+              curve: "smooth",
+              width: 2,
+              colors: [chartColor],
+              lineCap: "round",
+            },
+            grid: {
+              show: true,
+              borderColor: "transparent",
+              strokeDashArray: 0,
+              position: "back",
+              xaxis: {
+                lines: {
+                  show: false,
+                },
+              },
+              yaxis: {
+                lines: {
+                  show: false,
+                },
+              },
+              row: {
+                colors: undefined,
+                opacity: 0.5,
+              },
+              column: {
+                colors: undefined,
+                opacity: 0.5,
+              },
+              padding: {
+                top: -3,
+                right: 0,
+                bottom: 0,
+                left: 0,
+              },
+            },
+            colors: [chartColor], // Set color for series
+            fill: {
+              type: "gradient",
+              colors: [chartColor], // Set the starting color (top color) here
+              gradient: {
+                shade: "light", // Gradient shading type
+                type: "vertical", // Gradient direction (vertical)
+                shadeIntensity: 0.5, // Intensity of the gradient shading
+                gradientToColors: [`${chartColor}00`], // Bottom gradient color (with transparency)
+                inverseColors: false, // Do not invert colors
+                opacityFrom: 0.8, // Starting opacity
+                opacityTo: 0.3, // Ending opacity
+                stops: [0, 100],
+              },
+            },
+            // Customize the circle marker color on hover
+            markers: {
+              colors: [chartColor],
+              strokeWidth: 2,
+              size: 0,
+              hover: {
+                size: 8,
+              },
+            },
+            xaxis: {
+              labels: {
+                show: false,
+              },
+              categories: [
+                `Jan ${currentYear}`,
+                `Feb ${currentYear}`,
+                `Mar ${currentYear}`,
+                `Apr ${currentYear}`,
+                `May ${currentYear}`,
+                `Jun ${currentYear}`,
+                `Jul ${currentYear}`,
+                `Aug ${currentYear}`,
+                `Sep ${currentYear}`,
+                `Oct ${currentYear}`,
+                `Nov ${currentYear}`,
+                `Dec ${currentYear}`,
+              ],
+              tooltip: {
+                enabled: false,
+              },
+            },
+            yaxis: {
+              labels: {
+                show: false,
+              },
+            },
+            tooltip: {
+              x: {
+                format: "dd/MM/yy HH:mm",
+              },
+            },
+          };
+
+          var chart = new ApexCharts(
+            document.querySelector(`#${chartId}`),
+            options
+          );
+          chart.render();
+        }
+
+        // Call the function for each chart with the desired ID and color
+        createChart("areaChart", "#FF9F29");
+
+        // #dailyIconBarChart
+        var options = {
+          series: [
+            {
+              name: "Sales",
+              data: [
+                {
+                  x: "Mon",
+                  y: 20,
+                },
+                {
+                  x: "Tue",
+                  y: 40,
+                },
+                {
+                  x: "Wed",
+                  y: 20,
+                },
+                {
+                  x: "Thur",
+                  y: 30,
+                },
+                {
+                  x: "Fri",
+                  y: 40,
+                },
+                {
+                  x: "Sat",
+                  y: 35,
+                },
+              ],
+            },
+          ],
+          chart: {
+            type: "bar",
+            width: 164,
+            height: 80,
+            sparkline: {
+              enabled: true, // Remove whitespace
+            },
+            toolbar: {
+              show: false,
+            },
+          },
+          plotOptions: {
+            bar: {
+              borderRadius: 6,
+              horizontal: false,
+              columnWidth: 14,
+            },
+          },
+          dataLabels: {
+            enabled: false,
+          },
+          states: {
+            hover: {
+              filter: {
+                type: "none",
+              },
+            },
+          },
+          fill: {
+            type: "gradient",
+            colors: ["#E3E6E9"], // Set the starting color (top color) here
+            gradient: {
+              shade: "light", // Gradient shading type
+              type: "vertical", // Gradient direction (vertical)
+              shadeIntensity: 0.5, // Intensity of the gradient shading
+              gradientToColors: ["#E3E6E9"], // Bottom gradient color (with transparency)
+              inverseColors: false, // Do not invert colors
+              opacityFrom: 1, // Starting opacity
+              opacityTo: 1, // Ending opacity
+              stops: [0, 100],
+            },
+          },
+          grid: {
+            show: false,
+            borderColor: "#D1D5DB",
+            strokeDashArray: 1, // Use a number for dashed style
+            position: "back",
+          },
+          xaxis: {
+            labels: {
+              show: false, // Hide y-axis labels
+            },
+            type: "category",
+            categories: ["Mon", "Tue", "Wed", "Thur", "Fri", "Sat"],
+          },
+          yaxis: {
+            labels: {
+              show: false,
+              formatter: function (value) {
+                return (value / 1000).toFixed(0) + "k";
+              },
+            },
+          },
+          tooltip: {
+            y: {
+              formatter: function (value) {
+                return value / 1000 + "k";
+              },
+            },
+          },
+        };
+
+        var chart = new ApexCharts(
+          document.querySelector("#dailyIconBarChart"),
+          options
+        );
+        chart.render();
+
+        // transectionlineChart
+        var options = {
+          series: [
+            {
+              name: "This month",
+              data: [4, 16, 12, 28, 22, 38, 23],
+            },
+          ],
+          chart: {
+            height: 290,
+            type: "line",
+            toolbar: {
+              show: false,
+            },
+            zoom: {
+              enabled: false,
+            },
+            dropShadow: {
+              enabled: true,
+              top: 6,
+              left: 0,
+              blur: 4,
+              color: "#000",
+              opacity: 0.1,
+            },
+          },
+          dataLabels: {
+            enabled: false,
+          },
+          stroke: {
+            curve: "smooth",
+            width: 3,
+          },
+          markers: {
+            size: 0,
+            strokeWidth: 3,
+            hover: {
+              size: 8,
+            },
+          },
+          tooltip: {
+            enabled: true,
+            x: {
+              show: true,
+            },
+            y: {
+              show: false,
+            },
+            z: {
+              show: false,
+            },
+          },
+          grid: {
+            row: {
+              colors: ["transparent", "transparent"], // takes an array which will be repeated on columns
+              opacity: 0.5,
+            },
+            borderColor: "#D1D5DB",
+            strokeDashArray: 3,
+          },
+          yaxis: {
+            labels: {
+              formatter: function (value) {
+                return "$" + value + "k";
+              },
+              style: {
+                fontSize: "14px",
+              },
+            },
+          },
+          xaxis: {
+            categories: ["Mon", "Tues", "Wed", "Thurs", "Fri", "Sat", "Sun"],
+            tooltip: {
+              enabled: false,
+            },
+            labels: {
+              formatter: function (value) {
+                return value;
+              },
+              style: {
+                fontSize: "14px",
+              },
+            },
+            axisBorder: {
+              show: false,
+            },
+            crosshairs: {
+              show: true,
+              width: 20,
+              stroke: {
+                width: 0,
+              },
+              fill: {
+                type: "solid",
+                color: "#B1B9C4",
+                gradient: {
+                  colorFrom: "#D8E3F0",
+                  colorTo: "#BED1E6",
+                  stops: [0, 100],
+                  opacityFrom: 0.4,
+                  opacityTo: 0.5,
+                },
+              },
+            },
+          },
+        };
+
+        var chart = new ApexCharts(
+          document.querySelector("#transactionLineChart"),
+          options
+        );
+        chart.render();
+
+        // vector map
+        // Initialize Leaflet map
+        var map = L.map("leafletMap").setView([20, 0], 2); // Center at lat 20, lon 0
+
+        // Add tile layer (OpenStreetMap)
+        L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+          attribution: "© OpenStreetMap contributors",
+        }).addTo(map);
+
+        // Add example markers
+        const locations = [
+          { coords: [35.8617, 104.1954], label: "China: 250" },
+          { coords: [25.2744, 133.7751], label: "Australia: 250" },
+          { coords: [36.77, -119.41], label: "USA: 82%" },
+          { coords: [55.37, -3.41], label: "UK: 250" },
+          { coords: [25.2, 55.27], label: "UAE: 250" },
+        ];
+
+        locations.forEach((loc) => {
+          L.marker(loc.coords).addTo(map).bindPopup(loc.label);
+        });
+      });
+    </script>
+  </body>
+</html>
